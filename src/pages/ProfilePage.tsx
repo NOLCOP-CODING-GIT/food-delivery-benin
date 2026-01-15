@@ -345,12 +345,12 @@ const ProfilePage: React.FC = () => {
   const renderPersonalInfo = () => (
     <div className="space-y-6">
       {/* Avatar Section */}
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
         <div className="relative">
           <img
             src={profile.avatar}
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-4 border-orange-200"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-orange-200"
           />
           {isEditing && (
             <button className="absolute bottom-0 right-0 bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600 transition-colors">
@@ -358,11 +358,11 @@ const ProfilePage: React.FC = () => {
             </button>
           )}
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+        <div className="text-center sm:text-left">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
             {profile.firstName} {profile.lastName}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm sm:text-base">
             Membre depuis{" "}
             {new Date(profile.memberSince).toLocaleDateString("fr-BJ")}
           </p>
@@ -370,7 +370,7 @@ const ProfilePage: React.FC = () => {
       </div>
 
       {/* Personal Information */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Prénom
@@ -447,7 +447,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
 
-        <div className="md:col-span-2">
+        <div className="sm:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Adresse
           </label>
@@ -509,17 +509,17 @@ const ProfilePage: React.FC = () => {
 
       {/* Action Buttons */}
       {isEditing && (
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors w-full sm:w-auto"
           >
             <Save className="w-4 h-4" />
             Sauvegarder
           </button>
           <button
             onClick={handleCancel}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-full sm:w-auto"
           >
             <X className="w-4 h-4" />
             Annuler
@@ -534,45 +534,49 @@ const ProfilePage: React.FC = () => {
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
         Historique des commandes
       </h3>
-      {mockOrders.map((order) => (
-        <div
-          key={order.id}
-          className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Package className="w-6 h-6 text-orange-600" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">
-                  Commande #{order.id}
-                </h4>
-                <p className="text-sm text-gray-600">{order.restaurant}</p>
-                <div className="flex items-center gap-4 mt-1">
-                  <span className="text-xs text-gray-500 flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {new Date(order.date).toLocaleDateString("fr-BJ")}
-                  </span>
-                  <span className="text-xs text-gray-500 flex items-center gap-1">
-                    <Package className="w-3 h-3" />
-                    {order.items} article{order.items > 1 ? "s" : ""}
-                  </span>
+      <div className="space-y-3">
+        {mockOrders.map((order) => (
+          <div
+            key={order.id}
+            className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-lg flex items-center justify-center shrink-0">
+                  <Package className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
+                    Commande #{order.id}
+                  </h4>
+                  <p className="text-sm text-gray-600 truncate">
+                    {order.restaurant}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-1">
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {new Date(order.date).toLocaleDateString("fr-BJ")}
+                    </span>
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <Package className="w-3 h-3" />
+                      {order.items} article{order.items > 1 ? "s" : ""}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="text-right">
-              <p className="font-semibold text-orange-600">
-                {order.total.toLocaleString()} FCFA
-              </p>
-              <span className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                Livrée
-              </span>
+              <div className="text-right">
+                <p className="font-semibold text-orange-600 text-sm sm:text-base">
+                  {order.total.toLocaleString()} FCFA
+                </p>
+                <span className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                  Livrée
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 
@@ -581,43 +585,47 @@ const ProfilePage: React.FC = () => {
       <h3 className="text-lg font-semibold text-gray-900">Préférences</h3>
 
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg">
-          <div className="flex items-center gap-3">
-            <Bell className="w-5 h-5 text-orange-500" />
-            <div>
-              <h4 className="font-medium text-gray-900">Notifications</h4>
+        <div className="flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg">
+          <div className="flex items-center gap-3 min-w-0">
+            <Bell className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
+                Notifications
+              </h4>
               <p className="text-sm text-gray-600">
                 Recevoir des notifications par email
               </p>
             </div>
           </div>
-          <label className="relative inline-flex items-center cursor-pointer">
+          <label className="relative inline-flex items-center cursor-pointer shrink-0">
             <input type="checkbox" className="sr-only peer" defaultChecked />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
           </label>
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg">
-          <div className="flex items-center gap-3">
-            <Smartphone className="w-5 h-5 text-orange-500" />
-            <div>
-              <h4 className="font-medium text-gray-900">Notifications SMS</h4>
+        <div className="flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg">
+          <div className="flex items-center gap-3 min-w-0">
+            <Smartphone className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
+                Notifications SMS
+              </h4>
               <p className="text-sm text-gray-600">
                 Recevoir des alertes par SMS
               </p>
             </div>
           </div>
-          <label className="relative inline-flex items-center cursor-pointer">
+          <label className="relative inline-flex items-center cursor-pointer shrink-0">
             <input type="checkbox" className="sr-only peer" />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
           </label>
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg">
-          <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-orange-500" />
-            <div>
-              <h4 className="font-medium text-gray-900">
+        <div className="flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg">
+          <div className="flex items-center gap-3 min-w-0">
+            <MapPin className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
                 Partage de localisation
               </h4>
               <p className="text-sm text-gray-600">
@@ -625,7 +633,7 @@ const ProfilePage: React.FC = () => {
               </p>
             </div>
           </div>
-          <label className="relative inline-flex items-center cursor-pointer">
+          <label className="relative inline-flex items-center cursor-pointer shrink-0">
             <input type="checkbox" className="sr-only peer" defaultChecked />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
           </label>
@@ -641,12 +649,12 @@ const ProfilePage: React.FC = () => {
       <div className="space-y-4">
         <button
           onClick={() => setShowPasswordModal(true)}
-          className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <Shield className="w-5 h-5 text-orange-500" />
-            <div className="text-left">
-              <h4 className="font-medium text-gray-900">
+          <div className="flex items-center gap-3 min-w-0">
+            <Shield className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="text-left min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
                 Changer le mot de passe
               </h4>
               <p className="text-sm text-gray-600">
@@ -654,17 +662,17 @@ const ProfilePage: React.FC = () => {
               </p>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-gray-400" />
+          <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
         </button>
 
         <button
           onClick={() => setShowPaymentModal(true)}
-          className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <CreditCard className="w-5 h-5 text-orange-500" />
-            <div className="text-left">
-              <h4 className="font-medium text-gray-900">
+          <div className="flex items-center gap-3 min-w-0">
+            <CreditCard className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="text-left min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
                 Méthodes de paiement
               </h4>
               <p className="text-sm text-gray-600">
@@ -672,17 +680,17 @@ const ProfilePage: React.FC = () => {
               </p>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-gray-400" />
+          <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
         </button>
 
         <button
           onClick={twoFactorEnabled ? handle2FADisable : handle2FAToggle}
-          className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between p-3 sm:p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
         >
-          <div className="flex items-center gap-3">
-            <Smartphone className="w-5 h-5 text-orange-500" />
-            <div className="text-left">
-              <h4 className="font-medium text-gray-900">
+          <div className="flex items-center gap-3 min-w-0">
+            <Smartphone className="w-5 h-5 text-orange-500 shrink-0" />
+            <div className="text-left min-w-0">
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">
                 Authentification à deux facteurs
               </h4>
               <p className="text-sm text-gray-600">
@@ -692,11 +700,12 @@ const ProfilePage: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             {twoFactorEnabled && (
               <span className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                Activée
+                <span className="hidden sm:inline">Activée</span>
+                <span className="sm:hidden">✓</span>
               </span>
             )}
             <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -722,29 +731,52 @@ const ProfilePage: React.FC = () => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Mon Profil</h1>
+      <div className="flex items-center justify-between w-full sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Mon Profil
+        </h1>
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors sm:w-auto justify-center"
           >
-            <Edit2 className="w-4 h-4" />
-            Modifier
+            <Edit2 className="w-3 h-4" />
+            <span className="hidden sm:inline">Modifier</span>
+            <span className="sm:hidden">Éditer</span>
           </button>
         )}
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-8">
-        <nav className="flex space-x-8">
+      <div className="border-b border-gray-200 mb-6 sm:mb-8">
+        <nav className="flex flex-col sm:flex-row sm:space-x-8 space-y-2 sm:space-y-0">
           {[
-            { id: "personal", label: "Informations personnelles", icon: User },
-            { id: "orders", label: "Mes commandes", icon: Package },
-            { id: "preferences", label: "Préférences", icon: Bell },
-            { id: "security", label: "Sécurité", icon: Shield },
+            {
+              id: "personal",
+              label: "Informations personnelles",
+              icon: User,
+              mobileLabel: "Profil",
+            },
+            {
+              id: "orders",
+              label: "Mes commandes",
+              icon: Package,
+              mobileLabel: "Commandes",
+            },
+            {
+              id: "preferences",
+              label: "Préférences",
+              icon: Bell,
+              mobileLabel: "Préférences",
+            },
+            {
+              id: "security",
+              label: "Sécurité",
+              icon: Shield,
+              mobileLabel: "Sécurité",
+            },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -755,15 +787,16 @@ const ProfilePage: React.FC = () => {
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
-              <tab.icon className="w-4 h-4" />
-              {tab.label}
+              <tab.icon className="w-4 h-4 shrink-0" />
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className="sm:hidden">{tab.mobileLabel}</span>
             </button>
           ))}
         </nav>
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
         {activeTab === "personal" && renderPersonalInfo()}
         {activeTab === "orders" && renderOrders()}
         {activeTab === "preferences" && renderPreferences()}
@@ -772,8 +805,8 @@ const ProfilePage: React.FC = () => {
 
       {/* Password Change Modal */}
       {showPasswordModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">
                 Changer le mot de passe
@@ -913,8 +946,8 @@ const ProfilePage: React.FC = () => {
 
       {/* Payment Method Modal */}
       {showPaymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">
                 Ajouter une méthode de paiement
@@ -1101,8 +1134,8 @@ const ProfilePage: React.FC = () => {
 
       {/* 2FA Modal */}
       {show2FAModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">
                 Authentification à deux facteurs
